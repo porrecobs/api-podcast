@@ -19,7 +19,7 @@ exports.read_episode = function(req, res) {
     Episode.findById(req.params.episodeId, function(err, episode) {
         if (err)
             res.send(err);
-        res.json(epi);
+        res.json(episode);
     });
 };
 
@@ -33,27 +33,12 @@ exports.create_episode = function(req, res) {
 };
 
 exports.get_podcast = function(req, res) {
-    console.log('------------------------------------');
-    console.log(res);
-    console.log('------------------------------------');
     var i = 0;
-    request.get(base_url + req.params.url, (error, response, body) => {
-        console.log('------------------------------------');
-        console.log(body);
-        console.log('------------------------------------');
+    request.get(base_url + req.params.name, (error, response, body) => {
       parseString(body, function (err, result) {
-        for (i in result.rss.channel[0].item) {
-          dados.push({
-            titulo: result.rss.channel[0].item[i].title[0],
-            link: result.rss.channel[0].item[i].link[0],
-            descricao: result.rss.channel[0].item[i].description[0],
-            autor: result.rss.channel[0].item[i]["itunes:author"][0],
-            data_publicacao: result.rss.channel[0].item[i].pubDate[0],
-            media: result.rss.channel[0].item[i]["media:content"][0].$
-
-            })
-          }
-        });
-      res.json(dados);
+        console.log('------------------------------------');
+        console.log(result.rss.channel.title);
+        console.log('------------------------------------');
+      });
     })
  };
